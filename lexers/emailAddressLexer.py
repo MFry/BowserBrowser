@@ -45,11 +45,22 @@ __author__ = 'Michal'
 import ply.lex as lex
 import re
 
-tokens = ('EMAIL', 'PASS')
+tokens = ('EMAIL',)
+
+
+def t_EMAIL_normal (token):
+    r'[a-zA-Z]+@[a-zA-Z]+(?:\.[a-zA-Z]+)+'
+    email = re.sub(r'NOSPAM', '', token.value)
+    token.value = email
+    token.type = 'EMAIL'
+    return token
+
+'''
+# While this setup works, it is convoluted and somewhat unnecessary, so we replaced it.
 
 def t_EMAIL_spam (token):
-    #This attempts to find the word 'NOSPAM' within the three locations, before the @, after the @ but before the . , and after the period
-    r'[a-zA-Z]*NOSPAM[a-zA-Z]*@[a-zA-Z]+(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)*'
+    #This attempts to find the word 'NOSPAM' within the four locations, 2 before the @, after the @ but before the . , and after the period
+    r'[a-zA-Z]+NOSPAM[a-zA-Z]*@[a-zA-Z]+(?:\.[a-zA-Z]+)+|[a-zA-Z]*NOSPAM[a-zA-Z]+@[a-zA-Z]+(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)*'
     email = re.sub(r'NOSPAM', '', token.value)
     token.value = email
     token.type = 'EMAIL'
@@ -59,12 +70,8 @@ def t_EMAIL_normal (token):
     r'[a-zA-Z]+@[a-zA-Z]+(?:\.[a-zA-Z]+)+'
     token.type = 'EMAIL'
     return token
-
+'''
 t_ignore = '\r\v\t\n '
-
-def t_PASS (token):
-    r'[^ ]+'
-    return token
 
 def t_error(t):
   print ("Lexer: unexpected character " + t.value[0])
