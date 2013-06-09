@@ -48,8 +48,8 @@ import re
 tokens = ('EMAIL', 'PASS')
 
 def t_EMAIL_spam (token):
-    #This attempts to find the word 'NOSPAM' within the three locations, before the @, after the @ but before the . , and after the period
-    r'[a-zA-Z]*NOSPAM[a-zA-Z]*@[a-zA-Z]+(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)*'
+    #This attempts to find the word 'NOSPAM' within the four locations, 2 before the @, after the @ but before the . , and after the period
+    r'[a-zA-Z]+NOSPAM[a-zA-Z]*@[a-zA-Z]+(?:\.[a-zA-Z]+)+|[a-zA-Z]*NOSPAM[a-zA-Z]+@[a-zA-Z]+(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)+|[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]*NOSPAM[a-zA-Z]*(?:\.[a-zA-Z]+)*'
     email = re.sub(r'NOSPAM', '', token.value)
     token.value = email
     token.type = 'EMAIL'
