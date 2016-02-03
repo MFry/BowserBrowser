@@ -1,4 +1,4 @@
-__author__ = 'Michal'
+__author__ = 'Michal Frystacky'
 
 # JavaScript: Comments & Keywords
 #
